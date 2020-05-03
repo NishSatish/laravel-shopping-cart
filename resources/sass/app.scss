@@ -1,0 +1,23 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+// Custom
+@import 'navbar.scss';
+@import 'show-record.scss';
+@import 'records.scss';
+@import 'checkout.scss';
+@import 'orders.scss';
+
+
+// Global Styles
+
+body, hr  {
+    background: $primary;
+    color: $secondary;
+}
