@@ -16,12 +16,14 @@ class CartController extends Controller
     public $payment_id = null;
     public $copier = null;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('auth')->except('logout');
         \Stripe\Stripe::setApiKey(env('STRIPE_API_KEY', ''));
     }
 
-    public function store(Request $request, $id) {
+    public function store(Request $request, $id)
+    {
         $item = Item::find($id);
         $existingCart = Session::has('cart') ? Session::get('cart') : null;
         $cart = new Cart($existingCart);
@@ -31,7 +33,8 @@ class CartController extends Controller
         return redirect()->action('ItemsController@index');
     }
 
-    public function showCart() {
+    public function showCart()
+    {
         $doesCartExist = true;
         if (Session::has('cart')) {
             $oldCart = Session::get('cart');
@@ -59,7 +62,8 @@ class CartController extends Controller
     }
 
     // ---------------------------------CART MODIFICATION---------------------------------
-    public function increaseItem($id) {
+    public function increaseItem($id)
+    {
         $item = Item::find($id);
         $existingCart = Session::has('cart') ? Session::get('cart') : null;
         $cart = new Cart($existingCart);
@@ -69,7 +73,8 @@ class CartController extends Controller
         return redirect()->action('CartController@showCart');
     }
 
-    public function decreaseItem($id) {
+    public function decreaseItem($id)
+    {
         $reqdItem = Item::find($id);
         $existingCart = Session::has('cart') ? Session::get('cart') : null;
         $cart = new Cart($existingCart);
@@ -79,7 +84,8 @@ class CartController extends Controller
         return redirect()->action('CartController@showCart');
     }
 
-    public function removeItem($id) {
+    public function removeItem($id)
+    {
         $reqdItem = Item::find($id);
         $existingCart = Session::has('cart') ? Session::get('cart') : null;
         $cart = new Cart($existingCart);
@@ -91,7 +97,8 @@ class CartController extends Controller
 
     // ---------------------------------CHECKOUT AND PAYMENT---------------------------------
 
-    public function checkout(){
+    public function checkout()
+    {
         $oldCart = Session::get('cart');
         $cart = new Cart($oldCart);
         $total = $cart->totalPrice;
@@ -144,7 +151,8 @@ class CartController extends Controller
         return view('pages.cart.checkout')->with($arrayOfVars);
     }
 
-    public function postCheckout(Request $request) {
+    public function postCheckout(Request $request)
+    {
         $oldCart = Session::get('cart');
         $cart = new Cart($oldCart);
 
@@ -155,6 +163,6 @@ class CartController extends Controller
         $order->cart = serialize($cart);
         $order->save();
 
-        return redirect()->action('OrdersController@index');
+        return redirect()->action('OrdersController@showOrders');
     }
 }

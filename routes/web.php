@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'PagesController@index');
+Route::get('/', 'IndexController@index');
 
 Route::resource('records', 'ItemsController');
 
@@ -30,5 +30,5 @@ Route::get('/checkout', 'CartController@checkout');
 
 Route::get('/post_checkout', 'CartController@postCheckout');
 
-Route::get('/vieworders', 'OrdersController@index');
+Route::get('/vieworders', 'OrdersController@showOrders');
 

@@ -8,7 +8,8 @@ use Auth;
 
 class OrdersController extends Controller
 {
-    public function index() {
+    public function showOrders()
+    {
         $orders = Auth::user()->orders;
 
         $orders->transform(function($order, $key) {
